@@ -466,7 +466,7 @@
         const API_KEY = 'AQ.Ab8RN6ITwW9_UQLVlL4zxSc25H0ULN1hqlU6rk4wDjaCDfWjCg';
         
         // Usamos el endpoint v1 (versión estable) pasando la key por parámetro
-       fetch('https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent', {
+       fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + API_KEY, {
     method: 'POST',
     headers: {
         'x-goog-api-key': API_KEY,
