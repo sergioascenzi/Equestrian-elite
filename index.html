@@ -466,21 +466,20 @@
         const API_KEY = 'AQ.Ab8RN6KpeeT4vr09dzwsZK6I9ZyrOhezl0v_FZle3JNS8_r2Aw';
         
         // Usamos el endpoint v1 (versión estable) pasando la key por parámetro
-        fetch('https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-goog-api-key': API_KEY
-        }
-            },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea."
-                    }]
-                }]
-            })
-        })
+       fetch('https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent', {
+    method: 'POST',
+    headers: {
+        'x-goog-api-key': API_KEY,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        contents: [{
+            parts: [{
+                text: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea."
+            }]
+        }]
+    })
+})
         .then(response => response.json())
         .then(data => {
             console.log("Respuesta de Google:", data);
