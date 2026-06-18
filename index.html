@@ -466,11 +466,20 @@
         const API_KEY = 'AQ.Ab8RN6J6OyNw8fnqlfKN75Ar7-ngkFfzUQi72NTh20CXj4ming';
         
         // Usamos el endpoint v1 (versión estable) pasando la key por parámetro
-       fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + API_KEY, {
+       // Usamos el endpoint oficial de Gemini 1.5 Flash
+fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=' + API_KEY, {
     method: 'POST',
     headers: {
-        'x-goog-api-key': API_KEY,
         'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "contents": [{
+            "parts": [{
+                "text": "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea."
+            }]
+        }]
+    })
+})
     },
     body: JSON.stringify({
         contents: [{
