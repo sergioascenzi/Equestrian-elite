@@ -463,7 +463,7 @@
         console.log("Conectando de forma directa con Gemini...");
         
         // Tu clave AQ limpia
-        const API_KEY = "AQ.Ab8RN6KSIVaI1E4O3GImeaWkjxTz8Nn4mw9fCv7goNwZeTQ_eg";
+        
         
         // Usamos el endpoint v1 (versión estable) pasando la key por parámetro
      // Usamos el endpoint oficial de Gemini 1.5 Flash
@@ -471,7 +471,7 @@ fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        'x-goog-api-key': API_KEY
+        
     },
     body: JSON.stringify({
         "contents": [{
