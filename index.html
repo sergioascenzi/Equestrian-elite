@@ -466,7 +466,7 @@
         const API_KEY = "AQ.Ab8RN6KSIVaI1E4O3GImeaWkjxTz8Nn4mw9fCv7goNwZeTQ_eg";
         
         // Usamos el endpoint v1 (versión estable) pasando la key por parámetro
-       // Usamos el endpoint oficial de Gemini 1.5 Flash
+     // Usamos el endpoint oficial de Gemini 1.5 Flash
 fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
     method: 'POST',
     headers: {
@@ -481,31 +481,19 @@ fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:
         }]
     })
 })
-    body: JSON.stringify({
-        "contents": [{
-            "parts": [{
-                "text": "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea."
-            }]
-        }]
-    })
+.then(response => response.json())
+.then(data => {
+    console.log("Respuesta de Google:", data);
+    if (data.error) {
+        alert("Error de Google: " + data.error.message);
+    } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+        // Tu lógica para procesar el resultado exitoso
+        console.log("Resultado obtenido:", data.candidates[0].content.parts[0].text);
+    }
 })
-    },
-    body: JSON.stringify({
-        contents: [{
-            parts: [{
-                text: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea."
-            }]
-        }]
-    })
-})
-        .then(response => response.json())
-        .then(data => {
-            console.log("Respuesta de Google:", data);
-            
-            if (data.error) {
-                alert("Error de Google: " + data.error.message);
-                return;
-            }
+.catch(error => {
+    console.error("Error crítico:", error);
+});
             
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
                 const respuestaTexto = data.candidates[0].content.parts[0].text;
