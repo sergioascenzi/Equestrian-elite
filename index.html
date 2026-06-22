@@ -461,38 +461,24 @@
     if (el && el.innerText.includes("Race List")) {
         e.preventDefault();
         console.log("Conectando de forma directa con Gemini...");
-        // Llamada segura a la API de Gemini
-const API_KEY = 'AQ.Ab8RN6L0-HYjb0aCQrmubPt8NYQRLsSg1H6gK9pHERl5ttR9Fg'; // Sustituye por tu clave real
-const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        
+        const API_KEY = 'AQ.Ab8RN6L0-HYjb0aCQrmubPt8NYQRLsSg1H6gK9pHERl5ttR9Fg'; 
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-fetch(url, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        "contents": [{
-            "parts": [{
-                "text": "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea."
-            }]
-        }]
-    })
-})
-.then(response => response.json())
-    .then(data => {
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-            const respuestaTexto = data.candidates[0].content.parts[0].text;
-            console.log("Resultado obtenido:", respuestaTexto);
-            alert("CONECTADO CON ÉXITO!\n\nHipódromos activos hoy:\n\n" + respuestaTexto);
-        } else {
-            console.error("Estructura inesperada:", data);
-            alert("Conectado, pero la respuesta no tiene el formato esperado.");
-        }
-    })
-    .catch(error => {
-        console.error("Error al conectar con Gemini:", error);
-        alert("Error de conexión. Revisa la consola F12.");
-    });
-} // Cierra el if de la línea 461
-}); // Cierra el onclick de la línea 455
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." }] }]
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const texto = data.candidates[0].content.parts[0].text;
+            console.log("Resultado:", texto);
+            alert("Hipódromos:\n" + texto);
+        })
+        .catch(err => console.error("Error:", err));
+    } // Cierra el if
+}; // Cierra la función document.onclick
 </script>
