@@ -479,34 +479,18 @@ fetch(url, {
     })
 })
 .then(response => response.json())
-.then(data => {
-    console.log("Respuesta de Google:", data);
-})
-.catch(error => {
-    console.error("Error al conectar con Gemini:", error);
-});
-    if (data.error) {
-        alert("Error de Google: " + data.error.message);
-    } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-        // Tu lógica para procesar el resultado exitoso
-        console.log("Resultado obtenido:", data.candidates[0].content.parts[0].text);
-    }
-})
-.catch(error => {
-    console.error("Error crítico:", error);
-});
-            
-            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                const respuestaTexto = data.candidates[0].content.parts[0].text;
-                alert("¡CONECTADO CON ÉXITO!\n\nHipódromos activos hoy:\n\n" + respuestaTexto);
-            } else {
-                alert("Conectado, pero la estructura cambió. Revisa la consola.");
-            }
-        })
-        .catch(err => {
-            console.error("Error de red:", err);
-            alert("Error de conexión. Revisa la consola F12.");
-        });
-    }
-};
+    .then(data => {
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+            const respuestaTexto = data.candidates[0].content.parts[0].text;
+            console.log("Resultado obtenido:", respuestaTexto);
+            alert("CONECTADO CON ÉXITO!\n\nHipódromos activos hoy:\n\n" + respuestaTexto);
+        } else {
+            console.error("Estructura inesperada:", data);
+            alert("Conectado, pero la respuesta no tiene el formato esperado.");
+        }
+    })
+    .catch(error => {
+        console.error("Error al conectar con Gemini:", error);
+        alert("Error de conexión. Revisa la consola F12.");
+    });
 </script>
