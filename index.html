@@ -461,17 +461,14 @@
     if (el && el.innerText.includes("Race List")) {
         e.preventDefault();
         console.log("Conectando de forma directa con Gemini...");
-        
-        // Tu clave AQ limpia
-        
-        
-        // Usamos el endpoint v1 (versión estable) pasando la key por parámetro
-     // Usamos el endpoint oficial de Gemini 1.5 Flash
-fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
+        // Llamada segura a la API de Gemini
+const API_KEY = 'AQ.Ab8RN6L0-HYjb0aCQrmubPt8NYQRLsSg1H6gK9pHERl5ttR9Fg'; // Sustituye por tu clave real
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+fetch(url, {
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json',
-        
+        'Content-Type': 'application/json'
     },
     body: JSON.stringify({
         "contents": [{
@@ -484,6 +481,10 @@ fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:
 .then(response => response.json())
 .then(data => {
     console.log("Respuesta de Google:", data);
+})
+.catch(error => {
+    console.error("Error al conectar con Gemini:", error);
+});
     if (data.error) {
         alert("Error de Google: " + data.error.message);
     } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
