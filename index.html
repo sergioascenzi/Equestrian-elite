@@ -459,35 +459,35 @@
         el = el.parentElement;
     }
     
-    // Si se hace clic en "Race List", ejecutamos la lógica de la API
     if (el && el.innerText.includes("Race List")) {
-        e.preventDefault();
-        console.log("Conectando de forma segura con Gemini a través del proxy...");
-        
-        fetch('/api/proxy', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                prompt: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." 
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Respuesta completa de Gemini:", data);
+            e.preventDefault();
+            console.log("Conectando de forma segura con Gemini...");
             
-            // Verificamos si la respuesta contiene el campo esperado
-            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                const texto = data.candidates[0].content.parts[0].text;
-                alert("Hipódromos activos hoy:\n\n" + texto);
-            } else {
-                console.error("Formato de respuesta desconocido:", data);
-                alert("Error: La respuesta de la IA no tiene el formato esperado. Revisa la consola.");
-            }
-        })
-        .catch(err => {
-            console.error("Error crítico en la conexión:", err);
-            alert("Error: No se pudo contactar con el servidor. Verifica tu conexión.");
-        });
-    }
+            fetch('/api/proxy', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    prompt: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." 
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Respuesta completa de Gemini:", data);
+                if (data.error) {
+                    console.error("Error devuelto por la API:", data.error);
+                    alert("Error de la API: " + (data.error.message || "Revisa la consola"));
+                } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const texto = data.candidates[0].content.parts[0].text;
+                    alert("Resultado:\n\n" + texto);
+                } else {
+                    console.error("Formato de respuesta desconocido:", data);
+                    alert("Error: Revisa la consola, la respuesta no tiene el formato esperado.");
+                }
+            })
+            .catch(err => {
+                console.error("Error crítico:", err);
+                alert("Error: No se pudo contactar con el servidor.");
+            });
+        }
 };
 </script>
