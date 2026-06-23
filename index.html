@@ -467,17 +467,18 @@
         body: JSON.stringify({ prompt: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." })
       })
         .then(response => response.json())
-        .then(data => {
-    console.log("Respuesta completa de Gemini:", data);
-    if (data.candidates && data.candidates[0]) {
-        const texto = data.candidates[0].content.parts[0].text;
-        alert("Resultado:\n" + texto);
-    } else {
-        alert("Error: Revisa la consola, la respuesta no tiene el formato esperado.");
-    }
-})
-        })
-        .catch(err => console.error("Error:", err));
+      .then(data => {
+        console.log("Respuesta completa de Gemini:", data);
+        if (data.candidates && data.candidates[0]) {
+            const texto = data.candidates[0].content.parts[0].text;
+            alert("Resultado:\n" + texto);
+        } else {
+            console.error("Error en respuesta:", data);
+            alert("Error: Revisa la consola, la respuesta no tiene el formato esperado.");
+        }
+    })
+    .catch(err => console.error("Error:", err));
+   
     } // Cierra el if
 }; // Cierra la función document.onclick
 </script>
