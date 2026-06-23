@@ -452,33 +452,42 @@
 </a>
 </nav>
 <script>
-   document.onclick = function(e) {
+  document.onclick = function(e) {
     var el = e.target;
+    // Buscamos el elemento 'A' (enlace) padre más cercano
     while (el && el.tagName !== 'A') {
         el = el.parentElement;
     }
     
+    // Si se hace clic en "Race List", ejecutamos la lógica de la API
     if (el && el.innerText.includes("Race List")) {
         e.preventDefault();
-        console.log("Conectando de forma directa con Gemini...");
-      fetch('/api/proxy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." })
-      })
+        console.log("Conectando de forma segura con Gemini a través del proxy...");
+        
+        fetch('/api/proxy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                prompt: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." 
+            })
+        })
         .then(response => response.json())
-      .then(data => {
-        console.log("Respuesta completa de Gemini:", data);
-        if (data.candidates && data.candidates[0]) {
-            const texto = data.candidates[0].content.parts[0].text;
-            alert("Resultado:\n" + texto);
-        } else {
-            console.error("Error en respuesta:", data);
-            alert("Error: Revisa la consola, la respuesta no tiene el formato esperado.");
-        }
-    })
-    .catch(err => console.error("Error:", err));
-   
-    } // Cierra el if
-}; // Cierra la función document.onclick
+        .then(data => {
+            console.log("Respuesta completa de Gemini:", data);
+            
+            // Verificamos si la respuesta contiene el campo esperado
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                const texto = data.candidates[0].content.parts[0].text;
+                alert("Hipódromos activos hoy:\n\n" + texto);
+            } else {
+                console.error("Formato de respuesta desconocido:", data);
+                alert("Error: La respuesta de la IA no tiene el formato esperado. Revisa la consola.");
+            }
+        })
+        .catch(err => {
+            console.error("Error crítico en la conexión:", err);
+            alert("Error: No se pudo contactar con el servidor. Verifica tu conexión.");
+        });
+    }
+};
 </script>
