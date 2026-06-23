@@ -461,17 +461,11 @@
     if (el && el.innerText.includes("Race List")) {
         e.preventDefault();
         console.log("Conectando de forma directa con Gemini...");
-        
-        const API_KEY = ''; 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." }] }]
-            })
-        })
+      fetch('/api/proxy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: "Dame una lista simple de los hipódromos activos hoy en USA. Solo el nombre del hipódromo, uno por línea." })
+      })
         .then(response => response.json())
         .then(data => {
             const texto = data.candidates[0].content.parts[0].text;
